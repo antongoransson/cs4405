@@ -7,17 +7,17 @@ int channel = 0;
 
 
 void setup() {
-  size(1535, 512);
+    size(1535, 512);
 
-  getNewImage();
+    getNewImage();
 }
 
 void draw() {
-  background(0);
+    background(0);
 
-  image(source, 0, 0);
-  image(target, source.width, 0);
-  image(singleChannel, source.width * 2, 0);
-  fill(255);
-  text(channelNames[channel], source.width * 3 - 30, 30);
+    image(source, 0, 0);
+    image(target, source.width, 0);
+    image(singleChannel, source.width * 2, 0);
+    fill(255);
+    text(channelNames[channel], source.width * 3 - 30, 30);
 }
