@@ -31,7 +31,7 @@ int numberOfContributions = 1;
 
 void setup()
 {
-  size(500, 300);
+  size(2000, 1200);
 
   minim = new Minim(this);
   out = minim.getLineOut();
@@ -43,7 +43,6 @@ void setup()
 void draw()
 {
   background(0);
-
 
   text(audioFilenames[currentFile], 10, 20);
   text("Number of Freqencies " + numberOfContributions, 10, 40);
