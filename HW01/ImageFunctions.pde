@@ -8,7 +8,6 @@ PImage extractAsImageFromComponent(PImage s, int c) {
     t.pixels[i] = color(p[c], p[c], p[c] ); 
   }
   t.updatePixels();
-  
   return t;
 }
 
@@ -21,14 +20,26 @@ PImage createRGBImageFrom(PImage y, PImage cb, PImage cr) {
   cb.loadPixels();
   cr.loadPixels();
   rgb.loadPixels();
-  
+
+  y = makeReducedLevelImage(y, currentLevelsY);
+  cb = makeReducedLevelImage(cb, currentLevelsCb);
+  cr = makeReducedLevelImage(cr, currentLevelsCr);
   for (int i = 0; i < y.pixels.length; i += 1) {
     int [] c = ycbcr2RGB(red(y.pixels[i]), red(cb.pixels[i]), red(cr.pixels[i]));
-    
+
     rgb.pixels[i] = color(c[0], c[1], c[2]);
   }
   
   rgb.updatePixels();
   
   return rgb;
+}
+
+PImage makeReducedLevelImage(PImage image, int currentLevels) {
+  int [] histogram = greyScaleHistogram(image);
+  ArrayList<Box> boxes = medianCut(histogram, currentLevels);
+
+  int []  representativeLevels = representativeLevelForEach(boxes, histogram);
+
+  return reducedImageToLevels(image, representativeLevels);
 }

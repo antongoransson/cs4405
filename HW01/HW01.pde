@@ -1,4 +1,6 @@
-int currentLevels = 0;
+int currentLevelsY = 16;
+int currentLevelsCb = 16;
+int currentLevelsCr = 16;
 
 String [] testImageNames = { "baboon.png", "farmhouse.png", "flowers.png", "gif.png", "lena_flipped.png" };
 int currentImageIndex = 0;
@@ -33,8 +35,13 @@ void showLabels() {
 
   text("Original", 512 * 0.5, currentImage.height + 20);
   text("Y", 512 * 1.5, currentImage.height + 20);
+  text("Levels " + currentLevelsY, 512 * 1.5, currentImage.height + 40);
+  
   text("Cb", 512 * 2.5, currentImage.height + 20);
+  text("Levels " + currentLevelsCb, 512 * 2.5, currentImage.height + 40);
+  
   text("Cr", 512 * 3.5, currentImage.height + 20);
+  text("Levels " + currentLevelsCr, 512 * 3.5, currentImage.height + 40);
   text("Reconstructed", 512 * 4.5, currentImage.height + 20);
   text("PSNR (Original/Reconstructed) " + imageDifference, 512 * 4.5, currentImage.height + 50);
 }
