@@ -1,14 +1,14 @@
-int currentLevelsY = 16;
-int currentLevelsCb = 16;
-int currentLevelsCr = 16;
-
+int currentLevelsY;
+int currentLevelsCb;
+int currentLevelsCr;
+int defaultLevel = 20;
 String [] testImageNames = { "baboon.png", "farmhouse.png", "flowers.png", "gif.png", "lena_flipped.png" };
 int currentImageIndex = 0;
 
 PImage currentImage, reconstructedImage;
-PImage yImage, cbImage, crImage;
-
+PImage yImage, cbImage, crImage, yR, cbR, crR, yRR, cbRR, crRR;
 double imageDifference;
+int LIMIT = 40;
 
 void setup() {
   size(2560, 612);

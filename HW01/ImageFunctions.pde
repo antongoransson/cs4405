@@ -21,9 +21,6 @@ PImage createRGBImageFrom(PImage y, PImage cb, PImage cr) {
   cr.loadPixels();
   rgb.loadPixels();
 
-  y = makeReducedLevelImage(y, currentLevelsY);
-  cb = makeReducedLevelImage(cb, currentLevelsCb);
-  cr = makeReducedLevelImage(cr, currentLevelsCr);
   for (int i = 0; i < y.pixels.length; i += 1) {
     int [] c = ycbcr2RGB(red(y.pixels[i]), red(cb.pixels[i]), red(cr.pixels[i]));
 
