@@ -18,6 +18,16 @@ float linearPredictedFrom(float [] d, int s, int e) {
 
 void differentialEncoding(float [] s, float [] p, float [] e) {
   int N = DIFFERENTIAL_ENCODING_SIZE;
+
+  for (int i = 0; i < N; i += 1) {
+    p[i] = s[i];
+    e[i] = 0.0;
+  }
+
+  for (int i = N; i < s.length; i += 1) {
+    p[i] = linearPredictedFrom(s, i - N, i - 1);
+    e[i] = s[i] - p[i];
+  }  
 }
 
 // the output of the encoding process for DPCM coding is
@@ -27,6 +37,18 @@ void differentialEncoding(float [] s, float [] p, float [] e) {
 void dpcmEncoding(float [] s, float [] p, float [] e) {
   int N = DIFFERENTIAL_ENCODING_SIZE;
   float [] qp = new float[s.length];
+
+  for (int i = 0; i < N; i += 1) {
+    p[i] = s[i];
+    e[i] = 0.0;
+    qp[i] = p[i] + e[i]; 
+  }
+
+  for (int i = N; i < s.length; i += 1) {
+    p[i] = linearPredictedFrom(qp, i - N, i - 1);
+    e[i] = quantize(s[i] - p[i], quantisationScale);
+    qp[i] = p[i] + e[i]; 
+  } 
 
 }
 

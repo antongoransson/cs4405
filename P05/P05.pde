@@ -7,8 +7,11 @@ import ddf.minim.ugens.*;
 String [] audioFilenames = { "organ.wav", "hrp-extract.wav", "piano.wav", "test-speech-female.wav", "test-speech-male.wav", "sweep.wav", "tone.wav", "you_got_it_1.wav" };
 int currentFile = 0;
 
+// Number of samples per frame
 final int FRAME_SIZE = 1024;
-final float [] PREDICTOR_COEFFICIENTS = {0.8, 0.64, -0.45 };
+final float [] PREDICTOR_COEFFICIENTS = { 0.8, 0.64, -0.45 };
+// Current one = previous one
+final float [] PREDICTOR_COEFFICIENTS = { 1 };
 final int DIFFERENTIAL_ENCODING_SIZE = PREDICTOR_COEFFICIENTS.length;
 
 float [] signal;
@@ -28,7 +31,8 @@ float              sampleRate;
 
 
 void setup() {
-  size(1024, 720);
+  size(2048, 1040);
+  textSize(30);
   minim  = new Minim(this);
   output = minim.getLineOut();
   sampleBuffer = new MultiChannelBuffer( 1, 1 );
@@ -60,7 +64,7 @@ void playReconstructedData(float [] data) {
 void drawSample(AudioOutput o)
 {
   stroke(255);
-  text(audioFilenames[currentFile], 10, 20);
+  text(audioFilenames[currentFile], 12, 20);
   
   for (int i = 0; i < o.bufferSize() - 1; i += 1) {
     float x1 = map(i, 0, o.bufferSize(), 0, width);
@@ -71,7 +75,7 @@ void drawSample(AudioOutput o)
 
 
 void showDetails() {
-  text("Q = " + quantisationScale, 20, height - 80);
+  text("Q = " + quantisationScale, 20, height - 120);
   if (signal != null) {
     text("Samples (trimmed) = " + signal.length, 20, height - 60);
     text("# zero differences " + countZeroIn(signal) + " (" + nf(100.0 * countZeroIn(signal) / signal.length, 2, 1) + "%)", width * 1 / 4, height - 60);
@@ -84,14 +88,15 @@ void showDetails() {
   }
 
   if (error != null) {
-    text("# zero differences " + countZeroIn(error) + " (" + nf(100.0 * countZeroIn(error) / error.length, 2, 1) + "%)", width * 3 / 4, height - 60);
-    text("# unique " + countUniqueIn(error) + " out of " + error.length + " (" + nf(100.0 * countUniqueIn(error) / error.length, 2, 1) + "%)", width *3 / 4, height - 30);
+    text("# zero differences " + countZeroIn(error) + " (" + nf(100.0 * countZeroIn(error) / error.length, 2, 1) + "%)", width * 3 / 4 - 80, height - 60);
+    text("# unique " + countUniqueIn(error) + " out of " + error.length + " (" + nf(100.0 * countUniqueIn(error) / error.length, 2, 1) + "%)", width *3 / 4 - 80, height - 30);
   }
 }
 
 void showHistograms() {
   if (sourceHistogram != null) {
     image(sourceHistogram, 50, 200);
+    // sourceHistogram.resize(200, 400);
   }
   
   if (codedHistogram != null) {
