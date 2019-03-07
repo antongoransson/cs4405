@@ -45,3 +45,16 @@ float minimisesMSEOf(float [] d) {
 
   return m;
 }
+
+// Peak Signal to Noise Ratio
+float PSNR(float [] s1, float [] s2) {
+  float p = max(abs(min(s1)), abs(max(s1)));
+  float S = p * p;
+  float N = MSE(s1, s2);
+
+  return 10 * log10(S/N);
+}
+
+float log10(float x) {
+  return log(x) / log(10);
+}

@@ -10,6 +10,7 @@ float [] loadAudio(String s) {
   float [] signal = new float[sampleBuffer.getChannel(0).length];
   arrayCopy(sampleBuffer.getChannel(0), signal);
   
+  
   println(min(signal) + "..." + max(signal));
   return signal;
 }
