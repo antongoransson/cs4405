@@ -1,27 +1,15 @@
 void keyPressed() {
   switch (key) {
   case 'l':
-    getNewImage();
+    getNewImage2();
     break;
-  case 'a':
-    currentLevelsY -= 1;
-    getImage();
-    break;
-  case 's':
-    currentLevelsCb -= 1;
-    getImage();
-    break;
-  case 'd':
-    currentLevelsCr -= 1;
-    getImage();
-    break;
-  case 'c':
-    getImageMedianCut();
+  case 'k':
+    getNewImage1();
     break;
   }
 }
 
-void getNewImage() {
+void getNewImage1() {
   currentImageIndex = (currentImageIndex + 1) % testImageNames.length;
   currentImage = loadImage(testImageNames[currentImageIndex]);
   
@@ -33,7 +21,22 @@ void getNewImage() {
   currentLevelsCb = defaultLevel;
   currentLevelsCr = defaultLevel;
   
-  getImageMedianCut();
+  getImageMedianCut1();
+}
+
+void getNewImage2() {
+  currentImageIndex = (currentImageIndex + 1) % testImageNames.length;
+  currentImage = loadImage(testImageNames[currentImageIndex]);
+  
+  yImage = extractAsImageFromComponent(currentImage, 0);
+  cbImage = extractAsImageFromComponent(currentImage, 1);
+  crImage = extractAsImageFromComponent(currentImage, 2);
+  
+  currentLevelsY = defaultLevel;
+  currentLevelsCb = defaultLevel;
+  currentLevelsCr = defaultLevel;
+  
+  getImageMedianCut2();
 }
 
 void getImage() {
@@ -43,17 +46,40 @@ void getImage() {
   imageDifference = ycbcrPSNR(currentImage, reconstructedImage);
 }
 
-void getImageMedianCut() {
+void getImageMedianCut1() {
+  currentImage = loadImage(testImageNames[currentImageIndex]);
+  yImage.loadPixels();
+  cbImage.loadPixels();
+  crImage.loadPixels();
+
+  currentLevelsY -= 1;
+  currentLevelsCb -= 1;
+  currentLevelsCr -= 1;
+
+  yRR = makeReducedLevelImage(yImage, currentLevelsY- 1);
+  cbRR = makeReducedLevelImage(cbImage, currentLevelsCb -1);
+  crRR = makeReducedLevelImage(crImage, currentLevelsCr- 1);
+  
+  reconstructedImage = createRGBImageFrom(yRR, cbRR, crRR);
+  imageDifference = ycbcrPSNR(currentImage, reconstructedImage);
+  
+  if(imageDifference > LIMIT) {
+    getImageMedianCut1();
+  }
+}
+
+void getImageMedianCut2() {
   currentImage = loadImage(testImageNames[currentImageIndex]);
   yImage.loadPixels();
   cbImage.loadPixels();
   crImage.loadPixels();
   yR = makeReducedLevelImage(yImage, currentLevelsY);
-  cbR = makeReducedLevelImage(cbImage, currentLevelsCb);
-  crR = makeReducedLevelImage(crImage, currentLevelsCr);
-  
   yRR = makeReducedLevelImage(yImage, currentLevelsY- 1);
+  
+  cbR = makeReducedLevelImage(cbImage, currentLevelsCb);
   cbRR = makeReducedLevelImage(cbImage, currentLevelsCb -1);
+  
+  crR = makeReducedLevelImage(crImage, currentLevelsCr);
   crRR = makeReducedLevelImage(crImage, currentLevelsCr- 1);
   
   PImage reconstructedImage1 = createRGBImageFrom(yRR, cbR, crR);
@@ -78,6 +104,6 @@ void getImageMedianCut() {
 
   }
   if(imageDifference > LIMIT) {
-    getImageMedianCut();
+    getImageMedianCut2();
   }
 }

@@ -14,7 +14,7 @@ void setup() {
   size(2560, 612);
 
 
-  getNewImage();
+  getNewImage2();
 }
 
 void draw() {
