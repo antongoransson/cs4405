@@ -8,8 +8,8 @@ String [] audioFilenames = { "organ.wav", "hrp-extract.wav", "piano.wav", "test-
 int currentFile = 0;
 
 // Number of samples per frame
-final int FRAME_SIZE = 1024;
-final float [] PREDICTOR_COEFFICIENTS = { 0.8, 0.64, -0.45 };
+final int FRAME_SIZE = 2;
+// final float [] PREDICTOR_COEFFICIENTS = { 0.8, 0.64, -0.45 };
 // Current one = previous one
 final float [] PREDICTOR_COEFFICIENTS = { 1 };
 final int DIFFERENTIAL_ENCODING_SIZE = PREDICTOR_COEFFICIENTS.length;
