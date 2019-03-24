@@ -4,7 +4,7 @@ PImage originalTargetY;
 PImage codedTargetY;    // (more correctly) the motion compensated coded reference
 
 final int MACROBLOCK_SIZE = 16;
-
+final int DISPLACEMENT = 40;
 TimeIt timer = new TimeIt();
 
 void setup() {
@@ -26,9 +26,13 @@ void setup() {
   // coding of the (possibly) difference macroblocks
   // it should be a better representation than your result (why?)
   
-  codedTargetY = createImage(originalTargetY.width, originalTargetY.height, RGB);
+  // codedTargetY = createImage(originalTargetY.width, originalTargetY.height, RGB);
   // needs to be replaced by something like
-  // codedTargetY = forwardMC(codedReferenceY, originalTargetY);
+  timer.start();
+  
+  codedTargetY = forwardMC(codedReferenceY, originalTargetY);
+  timer.stop();
+  println("mc took " + timer.duration() + "ms");
 }
 
 void draw() {
