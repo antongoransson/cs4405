@@ -25,20 +25,22 @@ void setup() {
   // it is the result of motion compensation on the coded reference, followed by 
   // coding of the (possibly) difference macroblocks
   // it should be a better representation than your result (why?)
-  
-  // codedTargetY = createImage(originalTargetY.width, originalTargetY.height, RGB);
-  // needs to be replaced by something like
+  String match = "SSD";
   timer.start();
-  
-  codedTargetY = forwardMC(codedReferenceY, originalTargetY);
+  codedTargetY = forwardMCExhaustive(codedReferenceY, originalTargetY, match);
   timer.stop();
-  println("mc took " + timer.duration() + "ms");
+  println("mc took " + timer.duration() + "ms with match function: " + match);
+  
+  // timer.start();
+  // codedTargetY = forwardMCZeroMotion(codedReferenceY, originalTargetY);
+  // timer.stop();
+  // println("zero motion took " + timer.duration() + "ms");
 }
 
 void draw() {
   background(0);
 
-  //left-hand side of display show the reference
+  // left-hand side of display show the reference
   // right-hand side shows the target
   // top of the display is the source content (only available to the encoder)
   // bottom of the display is the coded content (available to encoder & decoder)
