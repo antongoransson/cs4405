@@ -6,6 +6,12 @@ void keyPressed() {
   case 'k':
     getNewImage1();
     break;
+  case 'r':
+    getImage2();
+    break;
+  case 't':
+    getImage1();
+    break;
   }
 }
 
@@ -39,15 +45,22 @@ void getNewImage2() {
   getImageMedianCut2();
 }
 
-void getImage() {
-  currentImage = loadImage(testImageNames[currentImageIndex]);
+void getImage2() {
   
-  reconstructedImage = createRGBImageFrom(yImage, cbImage, crImage);
-  imageDifference = ycbcrPSNR(currentImage, reconstructedImage);
+  currentLevelsY = defaultLevel;
+  currentLevelsCb = defaultLevel;
+  currentLevelsCr = defaultLevel;
+  getImageMedianCut2();
+}
+
+void getImage1() {
+  currentLevelsY = defaultLevel;
+  currentLevelsCb = defaultLevel;
+  currentLevelsCr = defaultLevel;
+  getImageMedianCut1();
 }
 
 void getImageMedianCut1() {
-  currentImage = loadImage(testImageNames[currentImageIndex]);
   yImage.loadPixels();
   cbImage.loadPixels();
   crImage.loadPixels();
@@ -69,7 +82,6 @@ void getImageMedianCut1() {
 }
 
 void getImageMedianCut2() {
-  currentImage = loadImage(testImageNames[currentImageIndex]);
   yImage.loadPixels();
   cbImage.loadPixels();
   crImage.loadPixels();
