@@ -2,6 +2,9 @@ PImage originalReferenceY;
 PImage codedReferenceY;
 PImage originalTargetY;
 PImage codedTargetY;    // (more correctly) the motion compensated coded reference
+PImage mcSSD;
+PImage mcSAD;
+PImage zeroMC;
 
 final int MACROBLOCK_SIZE = 16;
 final int DISPLACEMENT = 40;
@@ -27,14 +30,25 @@ void setup() {
   // it should be a better representation than your result (why?)
   String match = "SSD";
   timer.start();
-  codedTargetY = forwardMCExhaustive(codedReferenceY, originalTargetY, match);
+  mcSSD = forwardMCExhaustive(codedReferenceY, originalTargetY, match);
   timer.stop();
-  println("mc took " + timer.duration() + "ms with match function: " + match);
+  double diff1 = yPSNR(mcSSD, originalTargetY);
+  println("mc took " + timer.duration() + "ms with match function: " + match + " with psnr: " + diff1);
   
-  // timer.start();
-  // codedTargetY = forwardMCZeroMotion(codedReferenceY, originalTargetY);
-  // timer.stop();
-  // println("zero motion took " + timer.duration() + "ms");
+  match = "SAD";
+  timer.start();
+  mcSAD = forwardMCExhaustive(codedReferenceY, originalTargetY, match);
+  timer.stop();
+  double diff2 = yPSNR(mcSAD, originalTargetY);
+  println("mc took " + timer.duration() + "ms with match function: " + match + " with psnr: " + diff2);
+  
+  timer.start();
+  zeroMC = forwardMCZeroMotion(codedReferenceY, originalTargetY);
+  timer.stop();
+  double diff3 = yPSNR(zeroMC, originalTargetY);
+  println("zero motion took " + timer.duration() + "ms" + " with psnr: " + diff3);
+
+  codedTargetY = mcSSD;
 }
 
 void draw() {

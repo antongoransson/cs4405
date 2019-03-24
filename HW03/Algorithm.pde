@@ -8,12 +8,7 @@ PImage forwardMCExhaustive(PImage codedReferenceY, PImage originalTargetY, Strin
             for (int x = i - DISPLACEMENT; x <= i + DISPLACEMENT; x += 1) {
                 for (int y = j - DISPLACEMENT; y <= j + DISPLACEMENT; y += 1) {
                     PImage tempMB = codedReferenceY.get(x, y, MACROBLOCK_SIZE, MACROBLOCK_SIZE);
-                    double diff;
-                    if (match == "SSD") {
-                        diff = SSD(tempMB, mbTarget);
-                    } else {
-                        diff = SAD(tempMB, mbTarget);
-                    }
+                    double diff = match == "SSD" ? SSD(tempMB, mbTarget) : SAD(tempMB, mbTarget);
                     if (bestMB == null || diff < min) {
                         bestMB = tempMB;
                         min = diff;
