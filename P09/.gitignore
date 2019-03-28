@@ -1,2 +1,4 @@
 rep-*.mp4
 *-frag.mp4
+output
+*.pyc
