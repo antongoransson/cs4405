@@ -1,7 +1,9 @@
 PImage originalReferenceY;
 PImage codedReferenceY;
 PImage originalTargetY;
-PImage codedTargetY;    // (more correctly) the motion compensated coded reference
+
+// (more correctly) the motion compensated coded reference
+PImage codedTargetY;    
 PImage mcSSD;
 PImage mcSAD;
 PImage zeroMC;
