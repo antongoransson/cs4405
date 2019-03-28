@@ -45,7 +45,7 @@ double SAD(PImage p1, PImage p2) {
 }
 
 double SSD(PImage p1, PImage p2) {
-  double s = 0;
+    double s = 0;
     for (int i = 0; i < p1.width; i += 1) {
         for (int j = 0; j < p1.height; j += 1) {
             s += Math.pow(p1.get(i, j) - p2.get(i, j), 2);

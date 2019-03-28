@@ -47,6 +47,7 @@ void setup() {
   timer.stop();
   double diff3 = yPSNR(zeroMC, originalTargetY);
   println("zero motion took " + timer.duration() + "ms" + " with psnr: " + diff3);
+  println("searchwindow: " + (2 * DISPLACEMENT + 1) + " x " + (2 * DISPLACEMENT + 1));
 
   codedTargetY = mcSSD;
 }
