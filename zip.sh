@@ -1,4 +1,6 @@
+#! /bin/bash
 student_id="118106310"
-zip -r "$student_id-HW01.zip" HW01 && \
-zip -r "$student_id-HW02.zip" HW02 && \
-zip -r "$student_id-HW03.zip" HW03
+folders=(HW01 HW02 HW03)
+for f in ${folders[@]}; do
+    zip -r "$student_id-$f.zip" $f
+done
